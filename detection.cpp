@@ -1,12 +1,12 @@
 #include "detection.h"
 #include <iostream>
 
-Detection::Detection(int id, Point p, Point v, float time) {
+Detection::Detection(int id, Point cp, Point v, float ctime) {
     
     this->id = id;
-    this->p = p;
+    this->cp = cp;
     this->v = v;
-    this->time = time;
+    this->ctime = ctime;
 }
 
 Detection::~Detection() {}
@@ -14,9 +14,9 @@ Detection::~Detection() {}
 void Detection::info() {
 
     std::cout << "ID: " << id << std::endl;
-    std::cout << "Position: " << "(" << p.x << ", " << p.y << ", " << p.z << ")" << std::endl;
+    std::cout << "Position: " << "(" << cp.x << ", " << cp.y << ", " << cp.z << ")" << std::endl;
     std::cout << "Velocity: " << "(" << v.x << ", " << v.y << ", " << v.z << ")" << std::endl;
-    std::cout << "Time: " << time << std::endl << std::endl;
+    std::cout << "Time: " << ctime << std::endl << std::endl;
 }
 
 int Detection::get_id() {
@@ -24,9 +24,14 @@ int Detection::get_id() {
     return id;
 }
 
-Point Detection::get_position() {
+Point Detection::get_cposition() {
 
-    return p;
+    return cp;
+}
+
+Point Detection::get_fposition() {
+
+    return fp;
 }
 
 Point Detection::get_velocity() {
@@ -34,9 +39,14 @@ Point Detection::get_velocity() {
     return v;
 }
 
-float Detection::get_time() {
+float Detection::get_ctime() {
 
-    return time;
+    return ctime;
+}
+
+float Detection::get_ftime() {
+
+    return ftime;
 }
 
 void Detection::set_id(int id) {
@@ -47,4 +57,14 @@ void Detection::set_id(int id) {
 void Detection::set_velocity(Point v) {
     
     this->v = v;
+}
+
+void Detection::set_fposition(Point fp) {
+
+    this->fp = fp;
+}
+
+void Detection::set_ftime(float ftime) {
+    
+    this->ftime = ftime;
 }

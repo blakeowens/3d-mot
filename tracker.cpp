@@ -49,7 +49,7 @@ void Tracker::match_objects(void) {
             for (auto det : detections) {
                 
                 Detection* d = detections[det.first].at(detections[det.first].size() - 1);
-                float curr_dist = distance(d->get_position(), points.top()->get_position());
+                float curr_dist = distance(d->get_cposition(), points.top()->get_cposition());
                 if (curr_dist < min_dist) {
                     
                     min_dist = curr_dist;
@@ -71,7 +71,7 @@ void Tracker::match_objects(void) {
         }
 
         // for each point in the points stack
-            // get the detection with the closest distance
+            // get the detection with the closest distance **that does not already have a match**
             // if the number of points is equal to the number of detections (no new detections), make match
                 // remove the detection from points, add it to the map
             // if the number of points is not equal to the number of detections
@@ -126,6 +126,50 @@ float Tracker::distance(Point p1, Point p2) {
     return d;
 }
 
+void Tracker::update_velocities(void) {
+    
+    for (auto d : detections) {
+
+        std::vector<Detection*> curr = detections[d.first];
+        if (curr.size() >= 2) {
+            
+            Detection* d1 = curr.at(curr.size() - 2);
+            Detection* d2 = curr.at(curr.size() - 1);
+            
+            Point p1 = d1->get_cposition();
+            Point p2 = d2->get_cposition();
+
+            float time_diff = d2->get_ctime() - d1->get_ctime();
+
+            float vx = (p2.x - p1.x) / time_diff;
+            float vy = (p2.y - p1.y) / time_diff;
+            float vz = (p2.z - p1.z) / time_diff;
+
+            Point v(vx, vy, vz);
+
+            d2->set_velocity(v);
+        }
+    }
+}
+
+void Tracker::make_prediction(void) {
+
+    for (auto a : detections) {
+        
+        std::vector<Detection*> curr = detections[a.first];
+        for (int i = 0; i < curr.size(); ++i) {
+
+            Detection* d = curr[i];
+            Point cpos = d->get_cposition();
+            Point vel = d->get_velocity();
+            Point fpos(cpos.x + vel.x, cpos.y + vel.y, cpos.z + vel.z);
+
+            d->set_ftime(d->get_ctime() + 1.0f);
+            d->set_fposition(fpos);
+        }
+    }
+}
+
 void Tracker::print_points() {
     
     std::stack<Detection*> points_cpy = points;
@@ -141,19 +185,28 @@ void Tracker::print_detections() {
     for (auto a : detections) {
         std::vector<Detection*> curr = detections[a.first];
         std::cout << "ID: " << a.first << std::endl;
-        std::cout << "Positions: " << std::endl;
+        std::cout << "Real Positions: " << std::endl;
         for (auto b : curr) {
-            Point pos = b->get_position();
+            Point pos = b->get_cposition();
             std::cout << std::fixed;
             std::cout << std::setprecision(3);
-            std::cout << "(" << pos.x << ", " << pos.y << ", " << pos.z << ") @ " << b->get_time() << "s" << std::endl;
+            std::cout << "(" << pos.x << ", " << pos.y << ", " << pos.z << ") @ " << b->get_ctime() << "s" << std::endl;
         }
+
+        std::cout << "Future Positions: " << std::endl;
+        for (auto b : curr) {
+            Point pos = b->get_fposition();
+            std::cout << std::fixed;
+            std::cout << std::setprecision(3);
+            std::cout << "(" << pos.x << ", " << pos.y << ", " << pos.z << ") @ " << b->get_ftime() << "s" << std::endl;
+        }
+
         std::cout << "Velocity: " << std::endl;
         for (auto b : curr) {
             Point vel = b->get_velocity();
             std::cout << std::fixed;
             std::cout << std::setprecision(3);
-            std::cout << "(" << vel.x << ", " << vel.y << ", " << vel.z << ") @ " << b->get_time() << "s" << std::endl;
+            std::cout << "(" << vel.x << ", " << vel.y << ", " << vel.z << ") @ " << b->get_ctime() << "s" << std::endl;
         }
         std::cout << std::endl;
     }

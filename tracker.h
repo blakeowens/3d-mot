@@ -16,7 +16,7 @@ class Tracker {
         int curr_id = 0;
         std::map<int, std::vector<Detection*> > detections;
         std::stack<Detection*> points, unmatched;
-        const int FRAMES_PER_SECOND = 5;
+        const int FRAME_RATE = 6;
     public:
         Tracker();
         ~Tracker();
@@ -26,6 +26,9 @@ class Tracker {
         void create_objects(void);
 
         float distance(Point, Point);
+
+        void update_velocities(void);
+        void make_prediction(void);
         
         void print_points(void);
         void print_detections(void);

@@ -16,6 +16,8 @@ int main() {
         d->read_data(s, files.size());
         d->match_objects();
         d->create_objects();
+        d->update_velocities();
+        d->make_prediction();
     }
     
     d->print_detections();
