@@ -2,21 +2,34 @@
 #define TRACKER_H
 
 #include <vector>
+#include <stack>
+#include <string>
 #include <map>
+#include <fstream>
+#include <iostream>
+#include <cmath>
+#include <iomanip>
 #include "detection.h"
 
 class Tracker {
     private:
-        std::map<int, std::vector<Detection*> > frames;
-        Point vehicle = Point(0.0f, 0.0f, 0.0f);
-        float dist_threshold; // radius
-        float vel_threshold; // velocity threshold
-
+        int curr_id = 0;
+        std::map<int, std::vector<Detection*> > detections;
+        std::stack<Detection*> points, unmatched;
+        const int FRAMES_PER_SECOND = 5;
     public:
-        Tracker(std::map<int, std::vector<Detection*> >);
+        Tracker();
         ~Tracker();
 
-        // void cal_velocity(vector<detection*>)
+        void read_data(std::string, int);
+        void match_objects(void);
+        void create_objects(void);
+
+        float distance(Point, Point);
+        
+        void print_points(void);
+        void print_detections(void);
+
 };
 
 #endif
