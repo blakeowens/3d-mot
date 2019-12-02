@@ -161,7 +161,8 @@ void Tracker::make_prediction(void) {
 
             Detection* d = curr[i];
             Point cpos = d->get_cposition();
-            Point vel = d->get_velocity();
+            Point vel = (i == 0 && curr.size() > 1) ? curr[i+1]->get_velocity() : d->get_velocity();
+            
             Point fpos(cpos.x + vel.x, cpos.y + vel.y, cpos.z + vel.z);
 
             d->set_ftime(d->get_ctime() + 1.0f);
