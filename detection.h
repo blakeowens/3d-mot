@@ -10,26 +10,24 @@ struct Point {
 
 class Detection {
     private:
-        float ctime, ftime;
+        float ctime, ftime, l, w, h;
         Point cp, fp, v;
         int id;
     public:
-        Detection(int, Point, Point, float);
+        Detection(int id, Point cp, Point fp, float ctime) { this->id = id; this->cp = cp; this->fp = fp; this->ctime = ctime; }
         ~Detection();
 
-        void info();
+        int get_id() { return id; }
+        Point get_cposition() { return cp; }
+        Point get_fposition() { return fp; }
+        Point get_velocity() { return v; }
+        float get_ctime() { return ctime; }
+        float get_ftime() { return ftime; }
 
-        int get_id();
-        Point get_cposition();
-        Point get_fposition();
-        Point get_velocity();
-        float get_ctime();
-        float get_ftime();
-
-        void set_id(int);
-        void set_velocity(Point);
-        void set_fposition(Point);
-        void set_ftime(float);
+        void set_id(int id) { this->id = id; }
+        void set_velocity(Point v) { this->v = v; } 
+        void set_fposition(Point fp) { this->fp = fp; }
+        void set_ftime(float ftime) { this->ftime = ftime; }
 };
 
 #endif

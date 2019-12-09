@@ -9,6 +9,7 @@
 #include <iostream>
 #include <cmath>
 #include <iomanip>
+#include <set>
 #include "detection.h"
 
 class Tracker {
@@ -30,7 +31,6 @@ class Tracker {
         void update_velocities(void);
         void make_prediction(void);
         
-        void print_points(void);
         void print_detections(void);
 
 };
