@@ -28,11 +28,26 @@ int main() {
 /*
 
 Tracker::process(std::stack<Detection*> points) {
+
     this->points = points;
+    
     match_objects();
     create_objects();
     update_velocities();
     make_prediction();   
 }
+
+visualization would be something like:
+
+
+vector<Point> V to visualize
+at a given frame
+for each ID in the detections map
+    vector<Detection*> curr = current detection's frames
+    point = curr.at(frame)->get_fposition();
+    V.push_back(point)
+end for
+
+return V
 
 */
