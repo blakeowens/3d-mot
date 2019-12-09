@@ -44,6 +44,12 @@ void Tracker::read_data(std::string filename, int num_frames) {
     //      Detection* d = new Detection(0, P, Point(), T)
     //      points.push(d)
     // end for
+    
+    // for (int i = 0; i < your_vector.size(); i++) {
+    //      geometry_msgs::Point p = your_vector.at(i);
+    //      Detection* d = new Detection(0, Point(p.x, p.y, p.z), Point(), t);
+    //      points.push(d);
+    // }
 }
 
 /*
