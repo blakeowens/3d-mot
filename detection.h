@@ -28,6 +28,7 @@ class Detection {
         void set_velocity(Point v) { this->v = v; } 
         void set_fposition(Point fp) { this->fp = fp; }
         void set_ftime(float ftime) { this->ftime = ftime; }
+        void set_size(float l, float w, float h) { this->l = l; this->w = w; this->h = h; }
 };
 
 #endif
