@@ -24,3 +24,15 @@ int main() {
 
     return 0;
 }
+
+/*
+
+Tracker::process(std::stack<Detection*> points) {
+    this->points = points;
+    match_objects();
+    create_objects();
+    update_velocities();
+    make_prediction();   
+}
+
+*/
