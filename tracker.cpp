@@ -28,8 +28,11 @@ void Tracker::read_data(std::string filename, int num_frames) {
         file >> x;
         file >> y;
         file >> z;
-
+        
+        // Detection(ID, Current Location, Future Location, Current Time)
+        // Every new detection assumes ID of 0 and empty future location
         Detection* d = new Detection(0, Point(x, y, z), Point(), time);
+        // Add this point to the points stack
         points.push(d);
     }
 }
