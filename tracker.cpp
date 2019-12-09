@@ -36,7 +36,14 @@ void Tracker::read_data(std::string filename, int num_frames) {
         points.push(d);
     }
     
+    // Given:
     // vector<Point> where Point has (x, y, z)
+    // Time in seconds
+    
+    // for each point P in the vector at time T
+    //      Detection* d = new Detection(0, P, Point(), T)
+    //      points.push(d)
+    // end for
 }
 
 /*
