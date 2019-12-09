@@ -37,6 +37,8 @@ void Tracker::read_data(std::string filename, int num_frames) {
     }
     
     // Given:
+    // vector<std::pair> of std::pair<geometry_msgs::Point, geometry_msgs::Point>
+    //      where pair.first = (x, y, z) and pair.second = (l, w, h)
     // vector<Point> where Point has (x, y, z)
     // Time in seconds
     
@@ -46,8 +48,10 @@ void Tracker::read_data(std::string filename, int num_frames) {
     // end for
     
     // for (int i = 0; i < your_vector.size(); i++) {
-    //      geometry_msgs::Point p = your_vector.at(i);
+    //      geometry_msgs::Point p = your_vector.at(i).first;
+    //      geometry_msgs::Point s = your_vector.at(i).second;
     //      Detection* d = new Detection(0, Point(p.x, p.y, p.z), Point(), t);
+    //      d->set_size(s.x, s.y, s.z);
     //      points.push(d);
     // }
 }
