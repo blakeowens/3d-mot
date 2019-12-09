@@ -35,6 +35,8 @@ void Tracker::read_data(std::string filename, int num_frames) {
         // Add this point to the points stack
         points.push(d);
     }
+    
+    // vector<Point> where Point has (x, y, z)
 }
 
 /*
