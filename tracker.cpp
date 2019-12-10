@@ -79,6 +79,7 @@ void Tracker::match_objects(void) {
             
             // Find the distance between the detection and each point in the points stack, storing the minimum point
             int size = points.size();
+            if (size == 0) break;
             for (int i = 0; i < size; ++i) {
                 
                 // Calculate the current distance 
